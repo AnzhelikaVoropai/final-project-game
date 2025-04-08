@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Starry Sky</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="star-container"></div>
+    <div id="ship">
+      <img src="images/ship.gif" />
+    </div>
+    <div id="mode-panel">
+      <button id="easy-mode">Easy</button>
+      <button id="medium-mode">Medium</button>
+      <button id="hard-mode">Hard</button>
+    </div>
+    <div id="control-panel">
+      <button id="mouse-control">M</button>
+      <button id="keyboard-control">K</button>
+    </div>
+
+    <div id="asteroid-container"></div>
+
+    <div id="game-ui">
+      <div id="score-container"><span id="score">0</span></div>
+    </div>
+    <div id="upgrade-container">
+      <button id="upgrade-speed">Upgrade Speed</button>
+      <button id="upgrade-laser-speed">Upgrade Laser Speed</button>
+      <button id="upgrade-double-laser">Upgrade Double Laser</button>
+      <button id="fireRate-upgrade">Upgrade Fire Rate</button>
+    </div>
+
+    <script src="js/game.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,273 @@
+body {
+  overflow: hidden;
+  background-color: black;
+  cursor: url(images/cursor1.png);
+}
+
+#control-panel {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  justify-content: center;
+  padding-top: 20px;
+  padding-right: 20px;
+}
+
+#mouse-control {
+  width: 45px;
+  height: 45px;
+}
+#keyboard-control {
+  width: 45px;
+  height: 45px;
+}
+
+#mode-panel {
+  position: fixed;
+  top: 41px;
+  left: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background: none;
+  border: none;
+  z-index: 10;
+}
+
+#easy-mode,
+#hard-mode {
+  font-size: 10px;
+  width: 60px;
+  height: 43px;
+}
+
+#medium-mode {
+  font-size: 8px;
+  width: 60px;
+  height: 43px;
+}
+
+#game-ui {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  z-index: 1000;
+}
+
+#score-container {
+  font-size: 19px;
+  color: white;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+#upgrade-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  top: 50px;
+  margin-left: 0;
+}
+#upgrade-speed {
+  font-size: 8px;
+}
+#upgrade-laser-speed {
+  font-size: 8px;
+}
+#upgrade-double-laser {
+  font-size: 8px;
+}
+#fireRate-upgrade {
+  font-size: 8px;
+}
+
+.upgrade-btn {
+  padding: 10px 15px;
+  font-size: 7.5px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: not-allowed;
+  border-radius: 5px;
+}
+
+.upgrade-btn.active {
+  background-color: green;
+  cursor: pointer;
+}
+
+button {
+  padding: 10px 40px;
+  font-size: 20px;
+  height: 30px;
+  width: 80px;
+  background-color: black;
+  color: #fff;
+  text-shadow: 0 2px 0 rgb(0 0 0 / 25%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 0;
+  z-index: 1;
+  user-select: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: unset;
+  padding: 10px;
+  text-decoration: none;
+  font-weight: 100;
+  transition: all 0.7s cubic-bezier(0, 0.8, 0.26, 0.99);
+}
+
+button:before {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  content: "";
+  transition: 0.7s cubic-bezier(0, 0.8, 0.26, 0.99);
+  z-index: -1;
+  background-color: #333 !important;
+  box-shadow: 0 -4px rgb(0 0 0 / 50%) inset, 0 4px rgb(255 255 255 / 20%) inset,
+    -4px 0 rgb(255 255 255 / 20%) inset, 4px 0 rgb(0 0 0 / 50%) inset;
+  border-radius: 3px;
+}
+
+button:after {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  content: "";
+  box-shadow: 0 4px 0 0 rgb(0 0 0 / 15%);
+  transition: 0.7s cubic-bezier(0, 0.8, 0.26, 0.99);
+}
+
+button:hover:before {
+  box-shadow: 0 -4px rgb(0 0 0 / 50%) inset, 0 4px rgb(255 255 255 / 20%) inset,
+    -4px 0 rgb(255 255 255 / 20%) inset, 4px 0 rgb(0 0 0 / 50%) inset;
+}
+
+button:hover:after {
+  box-shadow: 0 4px 0 0 rgb(0 0 0 / 15%);
+}
+
+button:active {
+  transform: translateY(4px);
+}
+
+button:active:after {
+  box-shadow: 0 0px 0 0 rgb(0 0 0 / 15%);
+}
+
+#ship {
+  position: absolute;
+  left: 0;
+  top: 75%;
+  transition: left 1s;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 120px;
+  height: auto;
+}
+
+#ship img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+#star-container {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: black;
+}
+
+.star {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: twinkle-move linear infinite;
+}
+
+@keyframes twinkle-move {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+}
+
+#asteroid-container {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.asteroid {
+  position: absolute;
+  background-color: none;
+  border-radius: 50%;
+  animation: fall linear infinite;
+  width: 40px;
+  height: 40px;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-50px);
+  }
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+.laser {
+  position: absolute;
+  width: 0.25px;
+  height: 3px;
+  background-color: yellow;
+  position: absolute;
+  bottom: 10%;
+  transform: translateX(-50%);
+  animation: shoot 1s linear;
+  z-index: 10;
+}
+
+@keyframes shoot {
+  from {
+    bottom: 10%;
+  }
+  to {
+    bottom: 100%;
+  }
+}
