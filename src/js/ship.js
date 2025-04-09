@@ -15,6 +15,8 @@ let movingLeft = false;
 let movingRight = false;
 export let isPaused = false;
 
+let animationFrameId = null;
+
 export function moveShip() {
   if (isPaused) return;
 
@@ -28,14 +30,22 @@ export function moveShip() {
       acceleration = Math.min(acceleration + accelerationStep, maxSpeed);
       shipX += speed + acceleration;
     } else {
-      acceleration = Math.max(acceleration - accelerationStep, 0); // поступове гальмування
+      acceleration = Math.max(acceleration - accelerationStep, 0);
     }
   }
 
-  shipX = Math.max(0 + ship.offsetWidth / 2, Math.min(window.innerWidth - ship.offsetWidth / 2, shipX));
+  shipX = Math.max(
+    0 + ship.offsetWidth / 2,
+    Math.min(window.innerWidth - ship.offsetWidth / 2, shipX)
+  );
   ship.style.transform = `translateX(${shipX - ship.offsetWidth / 2}px)`;
 
-  requestAnimationFrame(moveShip);
+  animationFrameId = requestAnimationFrame(moveShip);
+}
+
+export function stopShipMovement() {
+  isPaused = true;
+  if (animationFrameId) cancelAnimationFrame(animationFrameId);
 }
 
 mouseControlBtn.addEventListener("click", () => {

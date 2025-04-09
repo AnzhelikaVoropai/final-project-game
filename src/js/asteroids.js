@@ -1,6 +1,8 @@
 import { ship, isPaused } from "./ship.js";
+import { stopGameFromOutside } from "./game.js";
 
 const asteroidContainer = document.getElementById("asteroid-container");
+
 let asteroidInterval;
 let asteroidFrequency = 5000;
 let asteroidSpeed = 7;
@@ -10,7 +12,7 @@ function createAsteroid() {
   asteroid.classList.add("asteroid");
 
   const img = document.createElement("img");
-  img.src="./images/asteroid.png";
+  img.src = "src/images/asteroid.png";
   img.style.width = "100%";
   img.style.height = "100%";
   asteroid.appendChild(img);
@@ -30,9 +32,19 @@ function createAsteroid() {
     const asteroidRect = asteroid.getBoundingClientRect();
     const shipRect = ship.getBoundingClientRect();
 
-    if (asteroidRect.top >= shipRect.bottom) {
+    // Якщо метеорит зіштовхується з кораблем
+    const isCollision =
+      asteroidRect.bottom >= shipRect.top &&
+      asteroidRect.top <= shipRect.bottom &&
+      asteroidRect.left < shipRect.right &&
+      asteroidRect.right > shipRect.left;
+
+    // Якщо метеорит долетів до низу екрану
+    const isMissed = asteroidRect.top >= window.innerHeight;
+
+    if (isCollision || isMissed) {
       clearInterval(asteroidFallCheck);
-      stopGame();
+      stopGame(); // Гра завершується і при зіткненні, і при падінні повз
     }
   }, 100);
 }
@@ -44,9 +56,7 @@ export function startAsteroids() {
 
 export function stopGame() {
   clearInterval(asteroidInterval);
-  document.querySelectorAll(".asteroid").forEach((asteroid) => asteroid.remove());
-  document.querySelectorAll(".laser").forEach((laser) => laser.remove());
-  document.body.innerHTML += "<h1 style='color: red; text-align: center;'>Game Over</h1>";
+  stopGameFromOutside();
 }
 
 export function setDifficulty(frequency, speed) {
