@@ -1,5 +1,5 @@
 import { initStars } from "./stars.js";
-import { moveShip, stopShipMovement } from "./ship.js";
+import { moveShip, stopShipMovement, resumeShipMovement } from "./ship.js";
 import { startAsteroids, setDifficulty } from "./asteroids.js";
 import { shootLaser } from "./shooting.js";
 import { setupUpgrades } from "./upgrades-handler.js";
@@ -32,6 +32,28 @@ function increaseScore() {
   updateUI();
 }
 
+// 🔁 Перезапуск гри
+function restartGame() {
+  const overlay = document.getElementById("game-over-overlay");
+  if (overlay) overlay.remove();
+
+  // Скинути змінні
+  scoreRef.value = 0;
+  scoreElement.textContent = "0";
+  isGameRunning = true;
+  isShooting = false;
+
+  // Скидаємо паузу корабля
+  resumeShipMovement();
+
+  // Запуск заново
+  startAsteroids();
+  updateUI();
+
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("keyup", handleKeyUp);
+}
+
 // 🎯 Зупинка гри
 export function stopGameFromOutside() {
   isGameRunning = false;
@@ -39,12 +61,11 @@ export function stopGameFromOutside() {
   document.removeEventListener("keydown", handleKeyDown);
   document.removeEventListener("keyup", handleKeyUp);
 
-  // Видалити всі астероїди та лазери
   document.querySelectorAll(".asteroid").forEach((el) => el.remove());
   document.querySelectorAll(".laser").forEach((el) => el.remove());
 
-  // Показати GAME OVER
   const overlay = document.createElement("div");
+  overlay.id = "game-over-overlay";
   overlay.style.position = "fixed";
   overlay.style.top = "0";
   overlay.style.left = "0";
@@ -62,9 +83,18 @@ export function stopGameFromOutside() {
   overlay.innerHTML = `
     <h1>GAME OVER</h1>
     <p style="color:white; font-size: 1.5rem;">Your score: ${scoreRef.value}</p>
+    <button id="restart-btn" style="
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+    ">
+      Почати заново
+    </button>
   `;
 
   document.body.appendChild(overlay);
+  document.getElementById("restart-btn").addEventListener("click", restartGame);
 }
 
 // 🎮 Керування стрільбою
@@ -84,10 +114,9 @@ document.addEventListener("keyup", handleKeyUp);
 // 🚀 Старт гри
 document.addEventListener("DOMContentLoaded", () => {
   initStars();
-  moveShip();
+  moveShip(); // Перший запуск корабля
   startAsteroids();
 
-  // Налаштування режимів
   const modePanel = document.getElementById("mode-panel");
   const modeButtons = modePanel.querySelectorAll("button");
 
@@ -100,7 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const button = e.target.closest("button");
     if (!button) return;
 
-    // Активний режим
     modeButtons.forEach((btn) => btn.classList.remove("active"));
     button.classList.add("active");
 

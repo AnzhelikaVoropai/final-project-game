@@ -48,6 +48,12 @@ export function stopShipMovement() {
   if (animationFrameId) cancelAnimationFrame(animationFrameId);
 }
 
+export function resumeShipMovement() {
+  isPaused = false;
+  moveShip();
+}
+
+// --- Кнопки управління ---
 mouseControlBtn.addEventListener("click", () => {
   controlMode = "mouse";
 });
@@ -56,12 +62,14 @@ keyboardControlBtn.addEventListener("click", () => {
   controlMode = "keyboard";
 });
 
+// --- Мишка ---
 window.addEventListener("mousemove", (e) => {
   if (controlMode === "mouse") {
     targetX = e.clientX;
   }
 });
 
+// --- Клавіатура ---
 document.addEventListener("keydown", (e) => {
   if (controlMode !== "keyboard") return;
   if (e.key === "ArrowLeft" || e.key === "a") movingLeft = true;
