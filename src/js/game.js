@@ -86,10 +86,10 @@ export function stopGameFromOutside() {
     <button id="restart-btn" style="
       margin-top: 20px;
       padding: 10px 20px;
-      font-size: 1rem;
+      font-size: 10px;
       cursor: pointer;
     ">
-      Почати заново
+      START AGAIN
     </button>
   `;
 
