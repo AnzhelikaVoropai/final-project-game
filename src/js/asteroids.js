@@ -10,6 +10,7 @@ function createAsteroid() {
   asteroid.classList.add("asteroid");
 
   const img = document.createElement("img");
+  img.src = "src/images/asteroid.png";
   img.style.width = "100%";
   img.style.height = "100%";
   asteroid.appendChild(img);
