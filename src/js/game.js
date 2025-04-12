@@ -1,5 +1,5 @@
-import { initStars } from "./stars.js";
 import { moveShip, stopShipMovement, resumeShipMovement } from "./ship.js";
+import { initStars } from "./stars.js";
 import { startAsteroids, setDifficulty } from "./asteroids.js";
 import { shootLaser } from "./shooting.js";
 import { setupUpgrades } from "./upgrades-handler.js";
@@ -30,6 +30,18 @@ const { updateUI } = setupUpgrades(scoreRef);
 function increaseScore() {
   scoreRef.increase();
   updateUI();
+}
+
+// 📊 Робота з localStorage
+function getBestScore() {
+  return parseInt(localStorage.getItem("bestScore")) || 0;
+}
+
+function updateBestScore(currentScore) {
+  const best = getBestScore();
+  if (currentScore > best) {
+    localStorage.setItem("bestScore", currentScore);
+  }
 }
 
 // 🔁 Перезапуск гри
@@ -80,9 +92,13 @@ export function stopGameFromOutside() {
   overlay.style.fontSize = "3rem";
   overlay.style.zIndex = "9999";
 
+  const bestScore = getBestScore();
+  updateBestScore(scoreRef.value);
+
   overlay.innerHTML = `
     <h1>GAME OVER</h1>
     <p style="color:white; font-size: 1.5rem;">Your score: ${scoreRef.value}</p>
+    <p style="color:white; font-size: 1.2rem;">Your best score: ${Math.max(bestScore, scoreRef.value)}</p>
     <button id="restart-btn" style="
       margin-top: 20px;
       padding: 10px 20px;
