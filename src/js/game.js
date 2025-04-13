@@ -150,13 +150,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     switch (button.id) {
       case "easy-mode":
-        setDifficulty(5000, 7);
+        setDifficulty(2000, 4);
         break;
       case "medium-mode":
-        setDifficulty(3000, 5);
+        setDifficulty(1500, 3);
         break;
       case "hard-mode":
-        setDifficulty(1500, 3);
+        setDifficulty(735, 1.5);
         break;
     }
   });
