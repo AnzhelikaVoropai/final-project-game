@@ -98,7 +98,10 @@ export function stopGameFromOutside() {
   overlay.innerHTML = `
     <h1>GAME OVER</h1>
     <p style="color:white; font-size: 1.5rem;">Your score: ${scoreRef.value}</p>
-    <p style="color:white; font-size: 1.2rem;">Your best score: ${Math.max(bestScore, scoreRef.value)}</p>
+    <p style="color:white; font-size: 1.2rem;">Your best score: ${Math.max(
+      bestScore,
+      scoreRef.value
+    )}</p>
     <button id="restart-btn" style="
       margin-top: 20px;
       padding: 10px 20px;
@@ -150,12 +153,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     switch (button.id) {
       case "easy-mode":
-        setDifficulty(2000, 4);
+        window.isHardMode = true;
+        setDifficulty(1700, 3);
         break;
       case "medium-mode":
-        setDifficulty(1500, 3);
+        window.isHardMode = true;
+        setDifficulty(1550, 2);
         break;
       case "hard-mode":
+        window.isHardMode = true;
         setDifficulty(735, 1.5);
         break;
     }

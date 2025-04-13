@@ -24,8 +24,11 @@ function createAsteroid() {
 
   asteroidContainer.appendChild(asteroid);
 
+  // 🛑 Не видаляй автоматично, якщо hard mode активний
   asteroid.addEventListener("animationend", () => {
-    if (!isPaused) asteroid.remove();
+    if (!isPaused && !window.isHardMode) {
+      asteroid.remove();
+    }
   });
 
   const asteroidFallCheck = setInterval(() => {
@@ -40,11 +43,12 @@ function createAsteroid() {
       asteroidRect.right > shipRect.left;
 
     // Якщо метеорит долетів до низу екрану
-    const isMissed = asteroidRect.top >= window.innerHeight;
+    const isMissed = asteroidRect.bottom >= window.innerHeight;
 
-    if (isCollision || isMissed) {
+    // В hard mode — обидва випадки завершують гру
+    if (isCollision || (isMissed && window.isHardMode)) {
       clearInterval(asteroidFallCheck);
-      stopGame(); // Гра завершується і при зіткненні, і при падінні повз
+      stopGame();
     }
   }, 100);
 }
