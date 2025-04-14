@@ -30,6 +30,7 @@ JavaScript — логіка гри та обробка подій
 🔗 https://anzhelikavoropai.github.io/final-project-game/
 
 📁 Структура проєкту
+
 final-project-game/
 │
 ├── src/
@@ -46,5 +47,6 @@ final-project-game/
 ├── styles.css                  # Основні стилі гри
 ├── index.html                  # Головна HTML-сторінка
 └── README.md                   # Документація проєкту
+
 
 
